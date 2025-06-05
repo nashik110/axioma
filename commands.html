@@ -1,0 +1,1032 @@
+<,DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Axioma - Comandos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="assets/img/avatar.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #121214;
+      color: #d1d5db;
+      overflow-x: hidden;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(18,18,20,0.9);
+      backdrop-filter: saturate(180%) blur(8px);
+      box-shadow: 0 2px 12px #22c55e44;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      transition: background-color 0.3s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #22c55e;
+    }
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      border: 2px solid #22c55e;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+nav ul li a {
+  color: #a7a7a7;
+  text-decoration: none;
+  font-weight: 600;
+  background-color: #1f1f23;
+  padding: 10px 16px;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  display: inline-block;
+}
+
+nav ul li a:hover {
+  background-color: #22c55e22;
+  color: #22c55e;
+  box-shadow: 0 0 8px #22c55e55;
+}
+
+nav ul li a.active {
+  background-color: #22c55e;
+  color: #121214;
+  font-weight: 700;
+  box-shadow: 0 0 12px #22c55eaa;
+}
+    main {
+      padding: 20px 40px 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #22c55e;
+    }
+
+    /* Contenedor de búsqueda y categorías */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    /* Input búsqueda */
+    #searchInput {
+      flex: 1 1 300px;
+      max-width: 400px;
+      padding: 8px 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      box-shadow: 0 0 8px #22c55e88;
+      background: #1f1f23;
+      color: #d1d5db;
+      transition: box-shadow 0.3s;
+    }
+    #searchInput::placeholder {
+      color: #6b7280;
+    }
+    #searchInput:focus {
+      box-shadow: 0 0 12px #22c55eff;
+    }
+
+    /* Barra horizontal de botones categoría */
+    .category-bar {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 4px 0;
+      max-width: 600px;
+      scrollbar-width: thin;
+      scrollbar-color: #22c55e44 transparent;
+    }
+    .category-bar::-webkit-scrollbar {
+      height: 6px;
+    }
+    .category-bar::-webkit-scrollbar-thumb {
+      background-color: #22c55e88;
+      border-radius: 3px;
+    }
+
+    .category-btn {
+      background: #1f1f23;
+      color: #a7a7a7;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s;
+      user-select: none;
+    }
+    .category-btn:hover {
+      background: #22c55e22;
+      color: #22c55e;
+    }
+    .category-btn.active {
+      background: #22c55e;
+      color: #121214;
+      border-color: #22c55e;
+      box-shadow: 0 0 12px #22c55ecc;
+    }
+
+    /* Lista comandos */
+    .command-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
+    }
+    .command-card {
+      background: rgba(18, 18, 20, 0.8);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #22c55e66;
+      transition: transform 0.3s, box-shadow 0.3s;
+      color: #d1d5db;
+      display: block;
+    }
+    .command-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px #22c55ecc;
+      background: rgba(18, 18, 20, 1);
+    }
+    .command-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #a7f3d0;
+      margin-bottom: 8px;
+    }
+    .command-desc {
+      font-size: 1rem;
+      color: #bbf7d0;
+      min-height: 48px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      margin-top: 60px;
+      font-size: 0.85rem;
+      color: #6b7280;
+      box-shadow: 0 -2px 10px #22c55e44 inset;
+    }
+  </style>
+</head>
+<body>
+<header id="header">
+  <div class="logo" aria-label="Axioma Bot">
+    <img src="assets/img/avatar.png" alt="Axioma Bot" />
+    Axioma
+  </div>
+  <nav role="navigation" aria-label="Menú principal">
+    <ul role="list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="commands.html" class="active" aria-current="page">Comandos</a></li>
+      <li><a href="developer.html">Desarrolladores</a></li>
+      <li><a href="soporte.html">Soporte</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <main>
+    <h1>📜 Lista de Comandos</h1>
+
+    <div class="controls">
+      <input id="searchInput" type="search" placeholder="Buscar comandos..." aria-label="Buscar comandos" />
+      <nav class="category-bar" aria-label="Filtro de categorías">
+        <button class="category-btn" data-category="admin">Admin</button><button class="category-btn" data-category="Afk">Afk</button><button class="category-btn" data-category="boster">Boster</button><button class="category-btn" data-category="chistes">Chistes</button><button class="category-btn" data-category="configs">Configs</button><button class="category-btn" data-category="dev">Dev</button><button class="category-btn" data-category="disabecommnd">Disabecommnd</button><button class="category-btn" data-category="hardban">Hardban</button><button class="category-btn" data-category="interaction">Interaction</button><button class="category-btn" data-category="jail">Jail</button><button class="category-btn" data-category="members">Members</button><button class="category-btn" data-category="mods">Mods</button><button class="category-btn" data-category="Multimedia">Multimedia</button><button class="category-btn" data-category="music">Music</button><button class="category-btn" data-category="Names">Names</button><button class="category-btn" data-category="redes sociales">Redes Sociales</button><button class="category-btn" data-category="security">Security</button><button class="category-btn" data-category="server">Server</button><button class="category-btn" data-category="snipe">Snipe</button><button class="category-btn" data-category="tst">Tst</button><button class="category-btn" data-category="userinstall">Userinstall</button><button class="category-btn" data-category="utils">Utils</button><button class="category-btn" data-category="vanity">Vanity</button><button class="category-btn" data-category="voice">Voice</button><button class="category-btn" data-category="wlc">Wlc</button>
+      </nav>
+    </div>
+
+    <section class="command-list" id="commandList">
+      
+        <article class="command-card" data-category="admin" data-name="autorol" data-desc="descripción no disponible">
+          <div class="command-name">autorol</div>
+          <div class="command-desc">¡Necesitas permisos de administrador para usar este comando, / ¡Debes mencionar el rol que quieres configurar como au...</div>
+<div class="command-usage" style="white-space: pre-line;"><role></div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="ban" data-desc="@param {message} message">
+          <div class="command-name">ban</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,ban <mencion | ID | username> <motivo></div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="delauto" data-desc="descripción no disponible">
+          <div class="command-name">delauto</div>
+          <div class="command-desc">¡Necesitas permisos de administrador para usar este comando, / ¡No se encontró una configuración de autorol para este...</div>
+<div class="command-usage" style="white-space: pre-line;">,delauto [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="join" data-desc="descripción no disponible">
+          <div class="command-name">join</div>
+          <div class="command-desc">¡Debes estar en un canal de voz para usar este comando, / No tienes permisos para que el bot se una a este canal de v...</div>
+<div class="command-usage" style="white-space: pre-line;">,join [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="kick" data-desc="@param {import('discord.js').message} message
+">
+          <div class="command-name">kick</div>
+          <div class="command-desc">@param {import('discord.js').Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,kick [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="nuke" data-desc="descripción no disponible">
+          <div class="command-name">nuke</div>
+          <div class="command-desc">No tienes permisos de administrador para ejecutar este comando.</div>
+<div class="command-usage" style="white-space: pre-line;">,nuke [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="unban" data-desc="@param {message} message">
+          <div class="command-name">unban</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,unban [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="admin" data-name="vcstaff" data-desc="descripción no disponible">
+          <div class="command-name">vcstaff</div>
+          <div class="command-desc">Comando 'vcstaff', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,vcstaff [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="Afk" data-name="afk" data-desc="descripción no disponible">
+          <div class="command-name">afk</div>
+          <div class="command-desc">Comando 'afk', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,afk [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="boster" data-name="boost" data-desc="descripción no disponible">
+          <div class="command-name">boost</div>
+          <div class="command-desc">¡No tienes permisos para usar este comando, / ¡Faltan parámetros, Usa el comando como sigue:\n\n / ¡Configuración de ...</div>
+<div class="command-usage" style="white-space: pre-line;">,boost [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="boster" data-name="delbost" data-desc="descripción no disponible">
+          <div class="command-name">delbost</div>
+          <div class="command-desc">¡No tienes permisos para usar este comando, / ¡No se ha encontrado ninguna configuración de booster en este servidor,...</div>
+<div class="command-usage" style="white-space: pre-line;">,delbost [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="boster" data-name="testboosterconfig" data-desc="descripción no disponible">
+          <div class="command-name">testboosterconfig</div>
+          <div class="command-desc">¡No tienes permisos para usar este comando, / ¡No se ha configurado el sistema de booster en este servidor, / ¡El can...</div>
+<div class="command-usage" style="white-space: pre-line;">,testboosterconfig [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="chistes" data-name="acertijo" data-desc="descripción no disponible">
+          <div class="command-name">acertijo</div>
+          <div class="command-desc">Comando 'acertijo', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,acertijo [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="chistes" data-name="chiste" data-desc="descripción no disponible">
+          <div class="command-name">chiste</div>
+          <div class="command-desc">Comando 'chiste', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,chiste [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="configs" data-name="automod" data-desc="@param {chatinputcommandinteraction} interaction">
+          <div class="command-name">automod</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,automod [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="configs" data-name="embed" data-desc="@param {chatinputcommandinteraction} interaction 
+">
+          <div class="command-name">embed</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,embed [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="configs" data-name="logs" data-desc="descripción no disponible">
+          <div class="command-name">logs</div>
+          <div class="command-desc">Comando 'logs', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,logs [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="configs" data-name="tickets" data-desc="@param {chatinputcommandinteraction} interaction">
+          <div class="command-name">tickets</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,tickets [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="client" data-desc="@param {chatinputcommandinteraction} interaction
+">
+          <div class="command-name">client</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,client [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="hola" data-desc="@param {chatinputcommandinteraction} interaction">
+          <div class="command-name">hola</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,hola [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="holamenu" data-desc="@param {chatinputcommandinteraction} interaction">
+          <div class="command-name">holamenu</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,holamenu [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="holamodal" data-desc="@param {chatinputcommandinteraction} interaction">
+          <div class="command-name">holaModal</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,holaModal [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="reload" data-desc="@param {import("discord.js").chatinputcommandinteraction} interaction 
+">
+          <div class="command-name">reload</div>
+          <div class="command-desc">@param {import("discord.js").ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,reload [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="setreact" data-desc="descripción no disponible">
+          <div class="command-name">setreact</div>
+          <div class="command-desc">Comando 'setreact', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,setreact [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="devs" data-desc="descripción no disponible">
+          <div class="command-name">devs</div>
+          <div class="command-desc">No eres un desarrollador del bot, no puedes usar este comando. / Este usuario no es un desarrollador del bot.</div>
+<div class="command-usage" style="white-space: pre-line;">,devs [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="dues" data-desc="descripción no disponible">
+          <div class="command-name">dues</div>
+          <div class="command-desc">⛔ | No tienes permisos suficientes para usar este comando. / ❌ | No se pudo obtener el dueño del bot.</div>
+<div class="command-usage" style="white-space: pre-line;">,dues [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="language" data-desc="@param {message} message">
+          <div class="command-name">language</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">setlang  <código de idioma>\nEjemplo: setlang es</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="ping" data-desc="@param {message} message">
+          <div class="command-name">ping</div>
+          <div class="command-desc">Obteniendo ping...</div>
+<div class="command-usage" style="white-space: pre-line;">ping</div>
+<div class="command-usage" style="white-space: pre-line;">ping</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="roldev" data-desc="descripción no disponible">
+          <div class="command-name">roldev</div>
+          <div class="command-desc">No tienes permisos para usar este comando. / El rol  / Rol  / Hubo un error al crear el rol.</div>
+<div class="command-usage" style="white-space: pre-line;">,roldev [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="dev" data-name="setprefix" data-desc="descripción no disponible">
+          <div class="command-name">setprefix</div>
+          <div class="command-desc">Comando 'setprefix', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">setprefix <nuevo prefix></div>
+        </article>
+      
+        <article class="command-card" data-category="disabecommnd" data-name="dcmd" data-desc="descripción no disponible">
+          <div class="command-name">dcmd</div>
+          <div class="command-desc">Comando 'dcmd', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,dcmd [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="disabecommnd" data-name="ecmd" data-desc="descripción no disponible">
+          <div class="command-name">ecmd</div>
+          <div class="command-desc">❌ El comando \ / ❌ Debes mencionar un canal válido, usar su ID, nombre o  / ❌ No hay comandos deshabilitados en este ...</div>
+<div class="command-usage" style="white-space: pre-line;">,ecmd [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="disabecommnd" data-name="whitelist" data-desc="descripción no disponible">
+          <div class="command-name">whitelist</div>
+          <div class="command-desc">Comando 'Whitelist', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,Whitelist [args]</div>
+<div class="command-usage" style="white-space: pre-line;">dwl add @usuario | dwl remove @usuario | dwl list</div>
+        </article>
+      
+        <article class="command-card" data-category="hardban" data-name="alerthb" data-desc="descripción no disponible">
+          <div class="command-name">alerthb</div>
+          <div class="command-desc">❌ Solo el owner del bot puede usar este comando. / ❌ Debes mencionar un canal válido o poner su ID. / ✅ Canal de logs...</div>
+<div class="command-usage" style="white-space: pre-line;">,alerthb [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="hardban" data-name="hardban" data-desc="descripción no disponible">
+          <div class="command-name">hardban</div>
+          <div class="command-desc">❌ Solo el owner del bot puede usar este comando. / ❌ Debes mencionar a un usuario válido. / ✅ ${userMention.tag} ha s...</div>
+<div class="command-usage" style="white-space: pre-line;">,hardban [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="hardban" data-name="unhardban" data-desc="descripción no disponible">
+          <div class="command-name">unhardban</div>
+          <div class="command-desc">❌ Solo el owner del bot puede usar este comando. / ❌ Debes mencionar a un usuario válido.\nUso:  / ✅ El usuario **${u...</div>
+<div class="command-usage" style="white-space: pre-line;">,unhardban [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="bailar" data-desc="@param {message} message">
+          <div class="command-name">bailar</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,bailar [args]</div>
+<div class="command-usage" style="white-space: pre-line;">,bailar [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="bang" data-desc="@param {message} message">
+          <div class="command-name">bang</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,bang [args]</div>
+<div class="command-usage" style="white-space: pre-line;">,bang [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="cry" data-desc="@param {message} message">
+          <div class="command-name">cry</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,cry [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="hug" data-desc="@param {message} message">
+          <div class="command-name">hug</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,hug [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="kill" data-desc="@param {message} message">
+          <div class="command-name">kill</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,kill [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="kiss" data-desc="@param {message} message">
+          <div class="command-name">kiss</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,kiss [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="pat" data-desc="@param {message} message">
+          <div class="command-name">pat</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,pat [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="sad" data-desc="@param {message} message">
+          <div class="command-name">sad</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,sad [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="slap" data-desc="@param {message} message">
+          <div class="command-name">slap</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,slap [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="interaction" data-name="wink" data-desc="@param {message} message">
+          <div class="command-name">wink</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,wink [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="jail" data-name="jail" data-desc="descripción no disponible">
+          <div class="command-name">jail</div>
+          <div class="command-desc">Comando 'jail', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;"><user></div>
+        </article>
+      
+        <article class="command-card" data-category="jail" data-name="jaillog" data-desc="descripción no disponible">
+          <div class="command-name">jaillog</div>
+          <div class="command-desc">Comando 'jaillog', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;"><#canal></div>
+        </article>
+      
+        <article class="command-card" data-category="jail" data-name="jailmsg" data-desc="descripción no disponible">
+          <div class="command-name">jailmsg</div>
+          <div class="command-desc">Comando 'jailmsg', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;"><mensaje></div>
+        </article>
+      
+        <article class="command-card" data-category="jail" data-name="listjail" data-desc="descripción no disponible">
+          <div class="command-name">listjail</div>
+          <div class="command-desc">No hay rol  / No hay usuarios en la cárcel.</div>
+<div class="command-usage" style="white-space: pre-line;">,listjail [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="jail" data-name="unjail" data-desc="descripción no disponible">
+          <div class="command-name">unjail</div>
+          <div class="command-desc">Comando 'unjail', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;"><user></div>
+        </article>
+      
+        <article class="command-card" data-category="jail" data-name="updatejail" data-desc="descripción no disponible">
+          <div class="command-name">updatejail</div>
+          <div class="command-desc">Comando 'updatejail', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,updatejail [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="members" data-name="tts" data-desc="descripción no disponible">
+          <div class="command-name">tts</div>
+          <div class="command-desc">❌ Debes estar en un canal de voz para usar este comando.</div>
+<div class="command-usage" style="white-space: pre-line;">,tts [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="addrole" data-desc="@param {message} message
+">
+          <div class="command-name">addrole</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">addrole <usuario> <rol></div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="lock" data-desc="descripción no disponible">
+          <div class="command-name">lock</div>
+          <div class="command-desc">Canal bloqueado correctamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,lock</div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="mute" data-desc="descripción no disponible">
+          <div class="command-name">mute</div>
+          <div class="command-desc">Por favor, incluye el ID de la persona, el tiempo de aislamiento en minutos y el motivo. / Por favor, proporciona un ...</div>
+<div class="command-usage" style="white-space: pre-line;">,mute [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="rolename" data-desc="@param {message} message
+">
+          <div class="command-name">roleName</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">rolename <rol> <valor></div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="steal" data-desc="@param {message} message">
+          <div class="command-name">steal</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">steal <emojis></div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="testwlc" data-desc="@param {message} message">
+          <div class="command-name">testWlc</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">testwlc</div>
+<div class="command-usage" style="white-space: pre-line;">wlctest</div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="unlock" data-desc="descripción no disponible">
+          <div class="command-name">unlock</div>
+          <div class="command-desc">Canal desbloqueado correctamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,unlock</div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="unmute" data-desc="descripción no disponible">
+          <div class="command-name">unmute</div>
+          <div class="command-desc">Por favor, incluye el ID del usuario al que quieres quitar el aislamiento. / No se pudo encontrar a ese usuario. / El...</div>
+<div class="command-usage" style="white-space: pre-line;">,unmute [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="mods" data-name="wban" data-desc="ejecuta el comando de ban
+">
+          <div class="command-name">wban</div>
+          <div class="command-desc">Ejecuta el comando de ban</div>
+<div class="command-usage" style="white-space: pre-line;">,ban <mencion | ID | username> <motivo></div>
+        </article>
+      
+        <article class="command-card" data-category="Multimedia" data-name="apple" data-desc="descripción no disponible">
+          <div class="command-name">apple</div>
+          <div class="command-desc">${user.username} is not listening to music on Apple Music right now. / No album art found.</div>
+<div class="command-usage" style="white-space: pre-line;">,apple [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="Multimedia" data-name="spotify" data-desc="descripción no disponible">
+          <div class="command-name">spotify</div>
+          <div class="command-desc">${user.username} is not listening to music on Spotify right now. / No album art found.</div>
+<div class="command-usage" style="white-space: pre-line;">,spotify [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="music" data-name="play" data-desc="descripción no disponible">
+          <div class="command-name">play</div>
+          <div class="command-desc">Debes estar en un canal de voz. / Debes poner el nombre o enlace de la canción. / ❌ No encontré canciones en esa URL ...</div>
+<div class="command-usage" style="white-space: pre-line;">,play [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="music" data-name="skip" data-desc="descripción no disponible">
+          <div class="command-name">skip</div>
+          <div class="command-desc">❌ No hay música reproduciéndose para saltar. / ❌ Ocurrió un error al intentar saltar la canción.</div>
+<div class="command-usage" style="white-space: pre-line;">,skip [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="music" data-name="stop" data-desc="descripción no disponible">
+          <div class="command-name">stop</div>
+          <div class="command-desc">❌ No hay música reproduciéndose. / <:Stop:1377808071040045187> Música detenida y cola limpiada. / ❌ Ocurrió un error ...</div>
+<div class="command-usage" style="white-space: pre-line;">,stop [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="avatars" data-desc="descripción no disponible">
+          <div class="command-name">avatars</div>
+          <div class="command-desc">Por favor envía o responde a un mensaje con una imagen o video. / Escribe el texto del meme separado por  / No se pud...</div>
+<div class="command-usage" style="white-space: pre-line;">,avatars [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="banners" data-desc="descripción no disponible">
+          <div class="command-name">banners</div>
+          <div class="command-desc">❌ | Ocurrió un error al ejecutar el comando.</div>
+<div class="command-usage" style="white-space: pre-line;">,banners [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="clearav" data-desc="descripción no disponible">
+          <div class="command-name">clearav</div>
+          <div class="command-desc">Comando 'clearav', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,clearavatars [@usuario|id]</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="clearbanners" data-desc="descripción no disponible">
+          <div class="command-name">clearbanners</div>
+          <div class="command-desc">Comando 'clearbanners', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,clearbanners</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="clearnames" data-desc="descripción no disponible">
+          <div class="command-name">clearnames</div>
+          <div class="command-desc">Comando 'clearnames', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,clearnames</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="cleartags" data-desc="descripción no disponible">
+          <div class="command-name">cleartags</div>
+          <div class="command-desc">Comando 'cleartags', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,cleartags</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="names" data-desc="descripción no disponible">
+          <div class="command-name">names</div>
+          <div class="command-desc">Usuario no encontrado. Usa mención o ID válido. / No se encontraron apodos ni nombres visuales para este usuario.</div>
+<div class="command-usage" style="white-space: pre-line;">,history [usuario]</div>
+        </article>
+      
+        <article class="command-card" data-category="Names" data-name="tags" data-desc="descripción no disponible">
+          <div class="command-name">tags</div>
+          <div class="command-desc">Usuario no encontrado. Usa mención o ID válido. / No hay historial de tags para este usuario.</div>
+<div class="command-usage" style="white-space: pre-line;">,tags [usuario]</div>
+        </article>
+      
+        <article class="command-card" data-category="redes sociales" data-name="ig" data-desc="descripción no disponible">
+          <div class="command-name">ig</div>
+          <div class="command-desc">Por favor, proporciona un nombre de usuario de Instagram. / Hubo un error al obtener la información de Instagram. / H...</div>
+<div class="command-usage" style="white-space: pre-line;">,ig [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="ak" data-desc="descripción no disponible">
+          <div class="command-name">ak</div>
+          <div class="command-desc">Comando 'ak', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,ak [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="security" data-desc="descripción no disponible">
+          <div class="command-name">security</div>
+          <div class="command-desc">✅ ${user.tag} fue agregado a la whitelist. / ⚠️ ${user.tag} ya está en la whitelist. / 🗑️ ${user.tag} fue removido d...</div>
+<div class="command-usage" style="white-space: pre-line;">,security [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="addwhitelist" data-desc="descripción no disponible">
+          <div class="command-name">addWhitelist</div>
+          <div class="command-desc">Comando 'addWhitelist', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,addWhitelist [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="ansecurity" data-desc="descripción no disponible">
+          <div class="command-name">ansecurity</div>
+          <div class="command-desc">Comando 'ansecurity', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,ansecurity [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="blacklist" data-desc="descripción no disponible">
+          <div class="command-name">blacklist</div>
+          <div class="command-desc">Comando 'blacklist', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,blacklist [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="clearwhitelist" data-desc="descripción no disponible">
+          <div class="command-name">clearwhitelist</div>
+          <div class="command-desc">Comando 'clearwhitelist', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,clearwhitelist [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="delrlx" data-desc="descripción no disponible">
+          <div class="command-name">delrlx</div>
+          <div class="command-desc">Comando 'delrlx', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,delrlx [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="on" data-desc="descripción no disponible">
+          <div class="command-name">on</div>
+          <div class="command-desc">Comando 'on', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,on [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="protect" data-desc="descripción no disponible">
+          <div class="command-name">protect</div>
+          <div class="command-desc">❌ No tienes permiso para usar este comando. / ✅ El sistema de protección contra roles con permisos peligrosos ha sido...</div>
+<div class="command-usage" style="white-space: pre-line;">,protect [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="removeuser" data-desc="descripción no disponible">
+          <div class="command-name">removeuser</div>
+          <div class="command-desc">Comando 'removeuser', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,removeuser [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="resetprotect" data-desc="descripción no disponible">
+          <div class="command-name">resetprotect</div>
+          <div class="command-desc">❌ No tienes permiso para usar este comando. / ⚠️ El sistema de protección no está activado en este servidor. / ✅ El s...</div>
+<div class="command-usage" style="white-space: pre-line;">,resetprotect [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="rlshow" data-desc="descripción no disponible">
+          <div class="command-name">rlshow</div>
+          <div class="command-desc">Comando 'rlshow', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,rlshow [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="rlx" data-desc="descripción no disponible">
+          <div class="command-name">rlx</div>
+          <div class="command-desc">Comando 'rlx', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,rlx [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="sancion" data-desc="descripción no disponible">
+          <div class="command-name">sancion</div>
+          <div class="command-desc">Comando 'sancion', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,sancion [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="unblacklist" data-desc="descripción no disponible">
+          <div class="command-name">unblacklist</div>
+          <div class="command-desc">Comando 'unblacklist', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,unblacklist [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="security" data-name="whitelist" data-desc="descripción no disponible">
+          <div class="command-name">Whitelist</div>
+          <div class="command-desc">Descripción no disponible</div>
+        </article>
+      
+        <article class="command-card" data-category="server" data-name="rol" data-desc="descripción no disponible">
+          <div class="command-name">rol</div>
+          <div class="command-desc">No hay roles en este servidor. / Hubo un error al obtener los roles.</div>
+<div class="command-usage" style="white-space: pre-line;">,rol [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="server" data-name="rv" data-desc="descripción no disponible">
+          <div class="command-name">rv</div>
+          <div class="command-desc">Comando 'rv', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,rv [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="server" data-name="serverinfo" data-desc="descripción no disponible">
+          <div class="command-name">serverinfo</div>
+          <div class="command-desc">Comando 'serverinfo', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,serverinfo [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="snipe" data-name="cs" data-desc="descripción no disponible">
+          <div class="command-name">cs</div>
+          <div class="command-desc">Comando 'cs', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">.cs</div>
+        </article>
+      
+        <article class="command-card" data-category="snipe" data-name="snipe" data-desc="descripción no disponible">
+          <div class="command-name">snipe</div>
+          <div class="command-desc">Por favor usa un número entre 1 y 12. / No hay un mensaje eliminado en la posición ${page}.</div>
+<div class="command-usage" style="white-space: pre-line;">,snipe [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="tst" data-name="ais" data-desc="descripción no disponible">
+          <div class="command-name">ais</div>
+          <div class="command-desc">You lack permissions.</div>
+<div class="command-usage" style="white-space: pre-line;">,ais [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="tst" data-name="nick" data-desc="descripción no disponible">
+          <div class="command-name">nick</div>
+          <div class="command-desc">No tienes permisos para cambiar apodos. / Se ha agregado </div>
+<div class="command-usage" style="white-space: pre-line;">,nick [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="tst" data-name="reset" data-desc="descripción no disponible">
+          <div class="command-name">reset</div>
+          <div class="command-desc">No tienes permisos para gestionar roles. / Se han eliminado todos los roles de los miembros, excepto el rol con ID ${...</div>
+<div class="command-usage" style="white-space: pre-line;">,reset [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="tst" data-name="uid" data-desc="descripción no disponible">
+          <div class="command-name">uid</div>
+          <div class="command-desc">❌ Error: ${errorData.message || res.statusText} / ❌ Ocurrió un error al obtener la información.</div>
+<div class="command-usage" style="white-space: pre-line;">,uid [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="userinstall" data-name="pinguser" data-desc="@param {chatinputcommandinteraction} interaction">
+          <div class="command-name">pingUser</div>
+          <div class="command-desc">@param {ChatInputCommandInteraction} interaction</div>
+<div class="command-usage" style="white-space: pre-line;">,pingUser [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="avatar" data-desc="descripción no disponible">
+          <div class="command-name">avatar</div>
+          <div class="command-desc">No pude encontrar un usuario con ese ID.</div>
+<div class="command-usage" style="white-space: pre-line;">,avatar [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="bailar" data-desc="@param {message} message">
+          <div class="command-name">bailar</div>
+          <div class="command-desc">@param {Message} message</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="bang" data-desc="@param {message} message">
+          <div class="command-name">bang</div>
+          <div class="command-desc">@param {Message} message</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="banner" data-desc="descripción no disponible">
+          <div class="command-name">banner</div>
+          <div class="command-desc">No se pudo encontrar un usuario con ese ID o nombre de usuario. / Este usuario no tiene un banner o no se pudo obtener.</div>
+<div class="command-usage" style="white-space: pre-line;">,banner [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="hlp" data-desc="descripción no disponible">
+          <div class="command-name">hlp</div>
+          <div class="command-desc">Comando 'hlp', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,hlp [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="img" data-desc="descripción no disponible">
+          <div class="command-name">img</div>
+          <div class="command-desc">Comando 'img', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,img <término></div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="meme" data-desc="descripción no disponible">
+          <div class="command-name">meme</div>
+          <div class="command-desc">Por favor envía o responde a un mensaje con una imagen o video. / Escribe el texto del meme separado por  / No se pud...</div>
+<div class="command-usage" style="white-space: pre-line;">,meme [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="pg" data-desc="@param {message} message">
+          <div class="command-name">pg</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">,pg [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="ping" data-desc="descripción no disponible">
+          <div class="command-name">ping</div>
+          <div class="command-desc">Descripción no disponible</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="poll" data-desc="descripción no disponible">
+          <div class="command-name">poll</div>
+          <div class="command-desc">Debes proporcionar una pregunta que termine con un punto. / Debes proporcionar al menos 2  que terminen en ,. / No pu...</div>
+<div class="command-usage" style="white-space: pre-line;">,poll Una pregunta. si, no, talvez</div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="profiue" data-desc="@param {client} client
+">
+          <div class="command-name">profiue</div>
+          <div class="command-desc">@param {Client} client</div>
+<div class="command-usage" style="white-space: pre-line;">,user <mencion | ID | username></div>
+        </article>
+      
+        <article class="command-card" data-category="utils" data-name="purge" data-desc="@param {message} message">
+          <div class="command-name">purge</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">.c [@usuario | id | nombre]</div>
+        </article>
+      
+        <article class="command-card" data-category="vanity" data-name="siablevanity" data-desc="descripción no disponible">
+          <div class="command-name">siablevanity</div>
+          <div class="command-desc">No tienes permisos para ejecutar este comando. / No se ha encontrado ninguna configuración de vanity en este servidor...</div>
+<div class="command-usage" style="white-space: pre-line;">,siablevanity [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="vanity" data-name="vanity" data-desc="descripción no disponible">
+          <div class="command-name">vanity</div>
+          <div class="command-desc">No tienes permisos para ejecutar este comando. / Por favor, proporciona los parámetros correctamente: ,setvanity <van...</div>
+<div class="command-usage" style="white-space: pre-line;">,vanity [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="voice" data-name="voicemaster" data-desc="descripción no disponible">
+          <div class="command-name">voicemaster</div>
+          <div class="command-desc">❌ No tienes permiso para usar este comando. / ✅ Voice Manager configurado correctamente. El canal de voz **joincreate...</div>
+<div class="command-usage" style="white-space: pre-line;">,voicemaster [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="wlc" data-name="dcbye" data-desc="descripción no disponible">
+          <div class="command-name">dcbye</div>
+          <div class="command-desc">Comando 'dcbye', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">dcbye</div>
+        </article>
+      
+        <article class="command-card" data-category="wlc" data-name="disablewlc" data-desc="descripción no disponible">
+          <div class="command-name">disablewlc</div>
+          <div class="command-desc">No hay configuración de bienvenida activada para este servidor. / La configuración de bienvenida ha sido desactivada ...</div>
+<div class="command-usage" style="white-space: pre-line;">dcwlc</div>
+        </article>
+      
+        <article class="command-card" data-category="wlc" data-name="setbye" data-desc="descripción no disponible">
+          <div class="command-name">setbye</div>
+          <div class="command-desc">Comando 'setbye', descripción generada automáticamente.</div>
+<div class="command-usage" style="white-space: pre-line;">,setbye [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="wlc" data-name="setwlc" data-desc="descripción no disponible">
+          <div class="command-name">setwlc</div>
+          <div class="command-desc">❌ Necesitas permisos de administrador para usar este comando. / ❌ Debes especificar una acción:  / ❌ Debes mencionar ...</div>
+<div class="command-usage" style="white-space: pre-line;">,setwlc [args]</div>
+        </article>
+      
+        <article class="command-card" data-category="wlc" data-name="testbye" data-desc="@param {message} message">
+          <div class="command-name">testbye</div>
+          <div class="command-desc">@param {Message} message</div>
+<div class="command-usage" style="white-space: pre-line;">byetest</div>
+        </article>
+      
+        <article class="command-card" data-category="wlc" data-name="testwlc" data-desc="@param {message} message">
+          <div class="command-name">testWlc</div>
+          <div class="command-desc">@param {Message} message</div>
+        </article>
+      
+    </section>
+  </main>
+
+
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const commandList = document.getElementById('commandList');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+
+    let activeCategory = null;
+
+    function filterCommands() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      Array.from(commandList.children).forEach(card => {
+        const name = card.dataset.name || '';
+        const desc = card.dataset.desc || '';
+        const category = card.dataset.category || '';
+
+        const matchesSearch = name.includes(query) || desc.includes(query);
+        const matchesCategory = activeCategory ? category === activeCategory : true;
+
+        if (matchesSearch && matchesCategory) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function setActiveCategory(category) {
+      if (activeCategory === category) {
+        activeCategory = null; // Toggle off
+      } else {
+        activeCategory = category;
+      }
+      categoryButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.category === activeCategory);
+      });
+      filterCommands();
+    }
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setActiveCategory(btn.dataset.category);
+      });
+    });
+
+    searchInput.addEventListener('input', () => {
+      filterCommands();
+    });
+
+    // Inicialmente muestra todo
+    filterCommands();
+  </script>
+</body>
+</html>

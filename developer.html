@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" href="assets/img/avatar.png" />
+<title>Axioma - Soporte</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #121214;
+    color: #d1d5db;
+  }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(18,18,20,0.9);
+      backdrop-filter: saturate(180%) blur(8px);
+      box-shadow: 0 2px 12px #22c55e44;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      transition: background-color 0.3s ease;
+    }
+    header.scrolled {
+      background: #121214cc;
+      box-shadow: 0 3px 20px #22c55ecc;
+    }
+  .logo {
+    display: flex;
+    align-items: center;
+    color: #22c55e;
+    font-weight: 700;
+    font-size: 1.15rem;
+    user-select: none;
+    margin-right: 24px;
+  }
+
+  .logo img {
+    height: 32px;
+    width: 32px;
+    margin-right: 8px;
+    border-radius: 50%;
+    border: 2px solid #22c55e;
+  }
+
+  #menuContainer {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+.menu-btn {
+  background: #1f1f23;
+  border: none;
+  color: #a7a7a7;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  display: inline-block;
+}
+
+.menu-btn:hover {
+  background-color: #22c55e22;
+  color: #22c55e;
+  box-shadow: 0 0 8px #22c55e55;
+}
+
+.menu-btn.active {
+  background-color: #22c55e;
+  color: #121214;
+  font-weight: 700;
+  box-shadow: 0 0 12px #22c55eaa;
+}
+
+
+  main {
+    padding: 72px 24px 24px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  h1 {
+    font-weight: 700;
+    color: #22c55e;
+    text-align: center;
+  }
+
+  .profile-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .profile-card {
+    background: #1f1f23;
+    border-radius: 12px;
+    padding: 20px;
+    width: 260px;
+    box-shadow: 0 0 12px rgba(34,197,94,0.3);
+    text-align: center;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto 12px auto;
+    border: 2px solid #22c55e;
+  }
+
+  .user-info {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .username {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #a7f3d0;
+  }
+
+  .discriminator {
+    color: #6ee7b7;
+  }
+
+  .status {
+    margin: 6px 0;
+    color: #10b981;
+  }
+
+  .info-list {
+    background: rgba(18,18,20,0.8);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 0 14px #22c55eaa;
+  }
+
+  section.contact-info, section.faq {
+    background: rgba(18,18,20,0.8);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 0 14px #22c55eaa;
+  }
+
+  .faq-item {
+    border-top: 1px solid #22c55e44;
+  }
+
+  .faq-item:first-child {
+    border-top: none;
+  }
+
+  .faq-question {
+    cursor: pointer;
+    padding: 12px 0;
+    font-weight: 600;
+    color: #22c55e;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    color: #bbf7d0;
+    font-weight: 400;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 0;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+    padding: 12px 0;
+  }
+
+  .faq-toggle-icon {
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    user-select: none;
+  }
+
+  .faq-item.open .faq-toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="assets/img/avatar.png" alt="Axioma" />
+    Axioma
+  </div>
+  <div id="menuContainer" role="tablist" aria-label="Menú principal">
+    <button class="menu-btn" onclick="location.href='index.html'">Comandos</button>
+    <button class="menu-btn" onclick="location.href='developer.html'">Developers</button>
+    <button class="menu-btn" onclick="location.href='soporte.html'">Soporte</button>
+  </div>
+</header>
+
+<main>
+  <h1>👥 Nuestro Equipo</h1>
+
+  <section class="profile-list">
+    <div class="profile-card">
+      <div class="avatar" style="background-image: url('https://images-ext-1.discordapp.net/external/rKxgMikiP9Vb72HHrQioCcuJDykXPCxS5hk2ZWc56bc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/256833418891886592/c237e6abf8406c3eb13d64db8e558de8.png');"></div>
+      <div class="user-info">
+        <div class="username">nash</div>
+        <div class="discriminator">wzgk</div>
+        <div class="status">En línea</div>
+        <div>ID: 256833418891886592</div>
+        <div>Rol: Desarrollador Principal</div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="avatar" style="background-image: url('https://images-ext-1.discordapp.net/external/hBU4EqLOHObMir2fPU2n9BwCaokU2GIBqwJ51xO3H5Y/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/1065630393321148497/6927f2e1ece1dc0e9a443f30ad0ddf2e.png?format=webp&quality=lossless');"></div>
+      <div class="user-info">
+        <div class="username">Gabo</div>
+        <div class="discriminator">1gab.</div>
+        <div class="status">En línea</div>
+        <div>ID: 1065630393321148497</div>
+        <div>Rol: Diseño & Creatividad</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-info" aria-label="Información de contacto">
+    <h2>Contáctanos</h2>
+    <p>Email: <a href="mailto:soporte@axiomabot.com">soporte@axiomabot.com</a></p>
+    <p>Discord: <a href="https://discord.gg/RABHAacvW9" target="_blank" rel="noopener noreferrer">Axioma Support</a></p>
+    <p>Visita nuestro servidor de soporte para ayuda en vivo.</p>
+  </section>
+
+  <section class="faq" aria-label="Preguntas frecuentes">
+    <h2>Preguntas frecuentes</h2>
+    <div class="faq-item" tabindex="0">
+      <div class="faq-question" role="button" aria-expanded="false">
+        ¿Cómo puedo añadir Axioma a mi servidor?
+        <span class="faq-toggle-icon">+</span>
+      </div>
+      <div class="faq-answer" hidden>
+        Para añadir Axioma, visita nuestra página principal y haz clic en el botón "Invitar". Sigue las instrucciones para autorizar el bot en tu servidor.
+      </div>
+    </div>
+    <div class="faq-item" tabindex="0">
+      <div class="faq-question" role="button" aria-expanded="false">
+        ¿Qué hacer si el bot no responde?
+        <span class="faq-toggle-icon">+</span>
+      </div>
+      <div class="faq-answer" hidden>
+        Revisa que el bot tenga permisos adecuados y que esté online. Si el problema persiste, contacta con soporte mediante email o Discord.
+      </div>
+    </div>
+    <div class="faq-item" tabindex="0">
+      <div class="faq-question" role="button" aria-expanded="false">
+        ¿Cómo reportar un error o bug?
+        <span class="faq-toggle-icon">+</span>
+      </div>
+      <div class="faq-answer" hidden>
+        Puedes reportar errores en nuestro servidor de soporte o enviarnos un email con detalles del problema.
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+      const parent = question.parentElement;
+      const isOpen = parent.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('open');
+        item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        item.querySelector('.faq-answer').hidden = true;
+      });
+      if (!isOpen) {
+        parent.classList.add('open');
+        question.setAttribute('aria-expanded', 'true');
+        question.nextElementSibling.hidden = false;
+      }
+    });
+  });
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.querySelector('.faq-question').click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
