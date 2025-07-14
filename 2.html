@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Biografia Nicolas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    color: white;
+    overflow: hidden;
+  }
+
+  #intro-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  #intro-screen h1 {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 0 5px white, 0 0 15px white;
+    animation: pulseGlow 2s infinite;
+    max-width: 90%;
+  }
+
+  @keyframes pulseGlow {
+    0% { text-shadow: 0 0 5px white, 0 0 15px white; }
+    100% { text-shadow: 0 0 20px white, 0 0 40px white; }
+  }
+
+  #bg-video {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    display: none;
+    z-index: -1;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #ff69b4;
+    text-shadow: 0 0 8px #ff69b4, 0 0 15px #ff69b4, 0 0 25px #ff69b4;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  h2 {
+    color: #ff85c1;
+    margin-bottom: 1rem;
+  }
+
+  /* Social Icons */
+  .social-icons {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    filter: drop-shadow(0 0 3px rgba(255,105,180,0.6));
+  }
+
+  .social-icons a {
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .social-icons a:hover {
+    filter: drop-shadow(0 0 8px currentColor);
+    transform: scale(1.15);
+  }
+
+  .social-icons svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+  }
+
+  /* Audio Player */
+  #audio-player {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 105, 180, 0.25);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    border: 2px solid #ff69b4;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    width: 140px;
+    box-shadow: 0 0 15px 3px rgba(255,105,180,0.8), inset 0 0 10px 2px rgba(255,105,180,0.7);
+    z-index: 9999;
+  }
+
+  #volume-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: #ffb6c1;
+    accent-color: #ff69b4;
+    cursor: pointer;
+    box-shadow: 0 0 10px 1px rgba(255,105,180,0.9);
+  }
+
+  #volume-slider::-webkit-slider-thumb,
+  #volume-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ff69b4;
+    box-shadow: 0 0 8px 2px rgba(255,105,180,1);
+    cursor: pointer;
+  }
+</style>
+
+</head>
+<body>
+
+<!-- Intro -->
+<div id="intro-screen">
+  <h1>Bienvenido</h1>
+  <h2>haz click para continuar</h2>
+</div>
+
+<!-- Video de fondo -->
+<video id="bg-video" muted playsinline loop>
+  <source src="https://cdn.discordapp.com/attachments/1342389299571855432/1394394495092654170/123.mp4?ex=6876a692&is=68755512&hm=c86c89cb9bc18e86b1841a658f0e81e6636af154b407a0be2a996bb678a5b4b7&" type="video/mp4" />
+</video>
+
+<!-- BIOGRAFÍA DE NASH -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nash Bio</title>
+<style>
+/* General */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  color: #ffc0cb; /* rosa claro */
+  background: #1a001a; /* negro con tono púrpura */
+}
+
+/* Fondo de video */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(1.1) saturate(1.3) hue-rotate(-20deg);
+}
+
+/* Contenedor principal */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* Animación para la tarjeta */
+@keyframes blurFadeIn {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Tarjeta */
+.card {
+  display: flex;
+  gap: 1.5rem;
+  background: rgba(255, 182, 193, 0.15); /* rosa pastel muy transparente */
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4); /* sombra rosa */
+  max-width: 800px;
+  width: 100%;
+  border: 1.5px solid rgba(255, 105, 180, 0.5);
+
+  /* Alineación vertical para que la bio y la imagen estén centradas */
+  align-items: center;
+}
+
+/* Imagen avatar */
+.avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 2px solid #ff69b4; /* rosa vibrante */
+  box-shadow: 0 0 10px #ff69b4aa;
+}
+
+/* Contenido textual dentro de la tarjeta */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+h2 {
+  margin: 0;
+  color: #ff69b4;
+  text-shadow: 0 0 6px #ff69b4cc;
+}
+
+h3 {
+  margin: 1rem 0 0.5rem;
+  color: #ff85b4;
+  font-size: 1.1rem;
+  text-shadow: 0 0 4px #ff85b4aa;
+}
+
+.bio p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  text-shadow: 0 0 3px #ffb6c1aa;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: #ffc0cb;
+  margin-top: 0.5rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 4px 6px;
+}
+
+th {
+  border-bottom: 1px solid #ff69b4;
+  font-weight: 600;
+}
+
+td {
+  color: #ffe4ec;
+}
+
+img.cover {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 0 8px #ff69b4cc;
+}
+
+
+</style>
+
+</head>
+<body>
+
+  <!-- Video de fondo -->
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="https://cdn.discordapp.com/attachments/1363697349381328936/1387697278684500049/123.mp4?ex=685e494d&is=685cf7cd&hm=99def88d8bf5f598656f47ba26e561481d16c094e2579a558a983a87d1146ebc&" type="video/mp4" />
+
+  </video>
+
+
+
+
+  <!-- Tarjeta de Nash -->
+  <main>
+    <div class="card">
+      <!-- Avatar -->
+      <img src="assets/nash.png" alt="Avatar de Nash" class="avatar" />
+
+      <!-- Texto y tabla -->
+      <div class="content">
+        <h2>Nicolas</h2>
+        <div class="bio">
+          <p><strong>Edad:</strong> 12 años</p>
+          <p> Me gusta estar en la computadora</p>
+          <p> Escucho de todo un poco</p>
+          <p> mi deporte que me atrae es el stake</p>
+          <p><strong>Favoritos:</strong> Dake, Cris MJ & Makabelico</p>
+        </div>
+
+        <h3>Top Canciones</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Canción</th>
+              <th>Artista</th>
+              <th>Portada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Pido Mucho</td>
+              <td>Kepo</td>
+              <td><img src="https://media.discordapp.net/attachments/1352463260074643528/1380538968051024002/pido-mucho.png?ex=68443e9b&is=6842ed1b&hm=75f38175eb053fd9d499c8cbaaa4776a696bb2ca0acb9bc6c63efd9379cb60fc&=&format=webp&quality=lossless"type="imagen/png" alt="Pido Mucho" class="cover" /></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Tate Quiera</td>
+              <td>ROA</td>
+              <td><img src="assets/tate-quieta.png" alt="Tate Quiera" class="cover" /></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Blue Demon</td>
+              <td>Comando Exclusivo</td>
+              <td><img src="assets/blue-demon.png" alt="Blue Demon" class="cover" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+
+
+
+<!-- Audio + volumen -->
+<div id="audio-player">
+  <input type="range" id="volume-slider" min="0" max="1" step="0.01" />
+</div>
+<audio id="audio" src="assets/music/123.mp3 " loop></audio>
+
+<script>
+  const intro = document.getElementById('intro-screen');
+  const video = document.getElementById('bg-video');
+  const audio = document.getElementById('audio');
+  const volumeSlider = document.getElementById('volume-slider');
+
+  const savedVolume = localStorage.getItem('userVolume');
+  const initialVolume = savedVolume !== null ? parseFloat(savedVolume) : 1.0;
+  audio.volume = initialVolume;
+  volumeSlider.value = initialVolume;
+
+  volumeSlider.addEventListener('input', e => {
+    const newVolume = parseFloat(e.target.value);
+    audio.volume = newVolume;
+    localStorage.setItem('userVolume', newVolume);
+  });
+
+  intro.addEventListener('click', () => {
+    intro.style.display = 'none';
+    video.style.display = 'block';
+    video.play().catch(err => console.error(err));
+    audio.play().catch(err => console.error(err));
+  });
+</script>
+<script>
+// Snowfall.js adaptado para navegador - Original por Cople, modificado
+(function () {
+  const css = `
+    #snowfield {
+      pointer-events: none;
+      user-select: none;
+      z-index: 100000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .snowflake {
+      position: absolute;
+      /* color rosa vibrante con brillo */
+      color: #ff69b4; /* hotpink */
+      font-weight: bold;
+      line-height: 1;
+      font-size: 20px;
+      font-family: Arial, sans-serif;
+      /* Brillo con sombras rosas */
+      text-shadow:
+        0 0 6px #ff69b4cc,
+        0 0 12px #ff85b4aa,
+        0 0 18px #ffb6c1aa;
+      user-select: none;
+      pointer-events: none;
+    }
+  `;
+
+  const style = document.createElement("style");
+  style.innerHTML = css;
+  document.head.appendChild(style);
+
+  const snowfield = document.createElement("div");
+  snowfield.id = "snowfield";
+  document.body.appendChild(snowfield);
+
+  const snowflakeChar = "❄";
+  const snowflakes = [];
+
+  function createSnowflake() {
+    const flake = document.createElement("div");
+    flake.className = "snowflake";
+    flake.innerHTML = snowflakeChar;
+
+    const size = Math.random() * 20 + 10;
+    flake.style.fontSize = size + "px";
+    flake.style.left = Math.random() * window.innerWidth + "px";
+    flake.style.top = "-30px";
+
+    // Opacidad entre 0.3 y 1 para mejor visibilidad
+    flake.style.opacity = (Math.random() * 0.7 + 0.3).toFixed(2);
+    flake.style.transition = `transform 5s linear, opacity 5s`;
+
+    snowfield.appendChild(flake);
+
+    requestAnimationFrame(() => {
+      const drift = (Math.random() - 0.5) * 100;
+      flake.style.transform = `translate(${drift}px, ${window.innerHeight + 30}px)`;
+      flake.style.opacity = 0;
+    });
+
+    setTimeout(() => {
+      snowfield.removeChild(flake);
+    }, 5000);
+  }
+
+  setInterval(createSnowflake, 250);
+})();
+</script>
+
+</body>
+</html>
